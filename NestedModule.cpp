@@ -13,7 +13,14 @@ namespace projectSystemC
         {
             wait(inputFifo->data_written_event());
             InputData inputData = inputFifo->read();
-            std::cout << "Hex display:\n";
+
+            std::cout << "\nHex display:\n";
+            if (!inputData.isDataValid)
+            {
+                std::cout << "E | r | r | o | r\n";
+                return;
+            }
+
             std::cout << inputData.secondStorage << " | " << inputData.operation << " | " << inputData.firstStorage << std::endl;
         }
     }

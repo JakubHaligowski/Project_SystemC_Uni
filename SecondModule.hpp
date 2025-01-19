@@ -12,6 +12,7 @@ namespace projectSystemC
 
     private:
         void printLedState();
+        void printLedError();
         void printLedStateForStorage(const uint8_t storage);
         void printLedStateForOperation(const uint16_t operation);
         void printLedOn();

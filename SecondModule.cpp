@@ -10,13 +10,22 @@ namespace projectSystemC
 
     void SecondModule::printLedState()
     {
-        wait(inputFifo->data_written_event());
-        InputData inpuData = inputFifo->read();
-        std::cout << "Led state:\n";
-        printLedStateForStorage(inpuData.secondStorage);
-        printLedStateForOperation(inpuData.operation);
-        printLedStateForStorage(inpuData.firstStorage);
-        std::cout << std::endl;
+        while (true)
+        {
+            wait(inputFifo->data_written_event());
+            InputData inpuData = inputFifo->read();
+            std::cout << "\n\nLed state:\n";
+
+            if (!inpuData.isDataValid)
+            {
+                printLedError();
+                return;
+            }
+
+            printLedStateForStorage(inpuData.secondStorage);
+            printLedStateForOperation(inpuData.operation);
+            printLedStateForStorage(inpuData.firstStorage);
+        }
     }
 
     void SecondModule::printLedStateForStorage(const uint8_t storage)
@@ -36,8 +45,7 @@ namespace projectSystemC
             printLedOn();
             break;
         default:
-            printLedOff();
-            printLedOff();
+            break;
         }
     }
 
@@ -54,7 +62,15 @@ namespace projectSystemC
             printLedOn();
             break;
         default:
-            printLedOff();
+            break;
+        }
+    }
+
+    void SecondModule::printLedError()
+    {
+        constexpr std::size_t numberOfLeds{5};
+        for (std::size_t i = 0; i < numberOfLeds; i++)
+        {
             printLedOff();
         }
     }

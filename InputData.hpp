@@ -9,6 +9,7 @@ namespace projectSystemC
         uint8_t firstStorage{};
         uint16_t operation{};
         uint8_t secondStorage{};
+        bool isDataValid{true};
 
         friend std::ostream &operator<<(std::ostream &os, const InputData &inputData)
         {

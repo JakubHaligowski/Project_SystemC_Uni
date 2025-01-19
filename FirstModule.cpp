@@ -15,7 +15,7 @@ namespace projectSystemC
         {
             InputData inputData{};
             std::cout << "Enter values for the first storage, operation and second storage\n";
-            std::cout << "Valus shoud be sperated by spaces in the format: A/B/C 1/2 A/B/C\n";
+            std::cout << "Valus should be sperated by spaces, in the format: A/B/C 1/2 A/B/C\n";
             std::cout << "or type Q to exit\n";
 
             std::string userInput;
@@ -48,29 +48,23 @@ namespace projectSystemC
         {
             wait(inputState.value_changed_event());
             InputData inputData{inputState.read()};
-            bool isDataValid{true};
 
             if (inputData.firstStorage != 'A' && inputData.firstStorage != 'B' && inputData.firstStorage != 'C')
             {
                 std::cout << "Invalid value for the first storage\n";
-                isDataValid = false;
+                inputData.isDataValid = false;
             }
 
             if (inputData.secondStorage != 'A' && inputData.secondStorage != 'B' && inputData.secondStorage != 'C')
             {
                 std::cout << "Invalid value for the second storage\n";
-                isDataValid = false;
+                inputData.isDataValid = false;
             }
 
             if (inputData.operation != 1 && inputData.operation != 2)
             {
                 std::cout << "Invalid value for the operation\n";
-                isDataValid = false;
-            }
-
-            if (!isDataValid)
-            {
-                continue;
+                inputData.isDataValid = false;
             }
 
             secondModuleFifo->write(inputData);
