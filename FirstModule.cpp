@@ -1,4 +1,5 @@
 #include "FirstModule.hpp"
+#include <sstream>
 
 namespace projectSystemC
 {
@@ -13,12 +14,29 @@ namespace projectSystemC
         while (true)
         {
             InputData inputData{};
-            std::cout << "Eneter value for the first storage (A/B/C):\n";
-            std::cin >> inputData.firstStorage;
-            std::cout << "Eneter value for the operation \n";
-            std::cin >> inputData.operation;
-            std::cout << "Eneter value for the second storage (A/B/C):\n";
-            std::cin >> inputData.secondStorage;
+            std::cout << "Enter values for the first storage, operation and second storage\n";
+            std::cout << "Valus shoud be sperated by spaces in the format: A/B/C 1/2 A/B/C\n";
+            std::cout << "or type Q to exit\n";
+
+            std::string userInput;
+            std::getline(std::cin, userInput);
+
+            if (userInput.empty())
+            {
+                continue;
+            }
+
+            std::istringstream ss(userInput);
+
+            if (ss.str().at(0) == 'Q')
+            {
+                sc_stop();
+                break;
+            }
+
+            ss >> inputData.firstStorage;
+            ss >> inputData.operation;
+            ss >> inputData.secondStorage;
             inputState.write(inputData);
             wait(3, SC_SEC);
         }
