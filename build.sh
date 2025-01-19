@@ -1,9 +1,8 @@
 #!/bin/bash
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PARENT_DIR="$(dirname "$SCRIPT_DIR")"
-export SYSTEMC_HOME=$PARENT_DIR/systemc/install
-mkdir ./build
+export SYSTEMC_HOME=$SCRIPT_DIR/systemc/install
+[ -d build ] || mkdir ./build
 (cd ./build; cmake ..)
 (cd ./build; make)
 
